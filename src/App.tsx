@@ -1,38 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import List from "./components/List";
 function App() {
   interface IState {
     people: {
       name: string;
-      url: string;
+      img: string;
       age: number;
       note?: string;
     }[];
   }
-  const [people, setPeople] = useState<IState["people"]>([]);
-  // const [people, setPeople] = useState([
-  //   {
-  //     name: "梁朝伟",
-  //     url: "",f
-  //     age: 23,
-  //     note: "重庆森林",
-  //   },
-  //   {
-  //     name: "吴彦祖",
-  //     url: "",
-  //     age: 23,
-  //   },
-  // ]);
-
-  people.map((persen) => {
-    console.log(persen.name);
-  });
+  const [people, setPeople] = useState<IState["people"]>([
+    {
+      name: "詹姆斯",
+      img: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png",
+      age: 35,
+      note: "Allegeric to staying on the same team",
+    },
+    {
+      name: "科比",
+      img: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png",
+      age: 42,
+    },
+  ]);
 
   return (
     <div className="App">
       <h1>人物列表</h1>
-      <List></List>
+      <List people={people}></List>
     </div>
   );
 }
