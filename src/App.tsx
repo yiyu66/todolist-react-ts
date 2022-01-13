@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import List from "./components/List";
 import AddToList from "./components/AddToList";
+export interface IState {
+  people: {
+    name: string;
+    img: string;
+    age: number;
+    note?: string;
+  }[];
+}
 function App() {
-  interface IState {
-    people: {
-      name: string;
-      img: string;
-      age: number;
-      note?: string;
-    }[];
-  }
   const [people, setPeople] = useState<IState["people"]>([
     {
       name: "詹姆斯",
@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       <h1>人物列表</h1>
       <List people={people}></List>
-      <AddToList people={people}></AddToList>
+      <AddToList people={people} setPeople={setPeople}></AddToList>
     </div>
   );
 }
