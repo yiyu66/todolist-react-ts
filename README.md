@@ -1,3 +1,5 @@
+本地测试使用postman mock数据,也可以使用json-server
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
