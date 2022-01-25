@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-// import List from "./components/List";
 import TaskList from "./components/TaskList";
-// import AddToList from "./components/AddToList";
+import AddTask from "./components/AddTask";
+import Header from "./components/Header";
+import { toUnicode } from "punycode";
 export interface Itask {
   tasks: {
     id: number;
@@ -18,7 +19,7 @@ function App() {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
       setTasks(tasksFromServer);
-      console.log(tasksFromServer);
+      // console.log(tasksFromServer);
     };
     getTasks();
   }, []);
@@ -39,14 +40,13 @@ function App() {
   };
   return (
     <div className="container">
-      <h1>任务列表</h1>
+      <Header title="Task Tracker" showAdd={false} />
+      <AddTask />
       {tasks.length > 0 ? (
         <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
       ) : (
         "No Tasks"
       )}
-      {/* <List people={people}></List> */}
-      {/* <AddToList people={people} setPeople={setPeople}></AddToList> */}
     </div>
   );
 }
