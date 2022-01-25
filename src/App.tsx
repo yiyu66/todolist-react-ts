@@ -3,15 +3,6 @@ import "./App.css";
 // import List from "./components/List";
 import TaskList from "./components/TaskList";
 // import AddToList from "./components/AddToList";
-
-export interface IState {
-  people: {
-    name: string;
-    img: string;
-    age: number;
-    note?: string;
-  }[];
-}
 export interface Itask {
   tasks: {
     id: number;
@@ -22,19 +13,6 @@ export interface Itask {
 }
 
 function App() {
-  // const [people, setPeople] = useState<IState["people"]>([
-  //   {
-  //     name: "詹姆斯",
-  //     img: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png",
-  //     age: 35,
-  //     note: "Allegeric to staying on the same team",
-  //   },
-  //   {
-  //     name: "科比",
-  //     img: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png",
-  //     age: 42,
-  //   },
-  // ]);
   const [tasks, setTasks] = useState<Itask["tasks"]>([]);
   useEffect(() => {
     const getTasks = async () => {
@@ -50,10 +28,23 @@ function App() {
     const data = await res.json();
     return data;
   };
+
+  const deleteTasks = (id: number) => {
+    console.log("delete", id);
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const toggleReminder = (id: number) => {
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task)));
+  };
   return (
-    <div className='container'>
+    <div className="container">
       <h1>任务列表</h1>
-      <TaskList tasks={tasks}></TaskList>
+      {tasks.length > 0 ? (
+        <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
+      ) : (
+        "No Tasks"
+      )}
       {/* <List people={people}></List> */}
       {/* <AddToList people={people} setPeople={setPeople}></AddToList> */}
     </div>
