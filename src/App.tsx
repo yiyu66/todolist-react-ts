@@ -3,7 +3,7 @@ import "./App.css";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import Header from "./components/Header";
-import { toUnicode } from "punycode";
+import Footer from "./components/Footer";
 export interface Itask {
   tasks: {
     id: number;
@@ -38,15 +38,23 @@ function App() {
   const toggleReminder = (id: number) => {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task)));
   };
+
+  const addTask = (task: Itask) => {
+    console.log(task);
+    // const id = Math.floor(Math.random() * 10000) + 1;
+    // const newTask = { id, ...task };
+    // setTasks([...tasks, newTask]);
+  };
   return (
     <div className="container">
       <Header title="Task Tracker" showAdd={false} />
-      <AddTask />
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? (
         <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
       ) : (
         "No Tasks"
       )}
+      <Footer />
     </div>
   );
 }
