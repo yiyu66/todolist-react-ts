@@ -1,5 +1,8 @@
-本地测试使用postman mock数据,也可以使用json-server
+使用json-server mock数据
 
+npm run build打包项目，使用npm install -g serve下载serve
+
+serve -s build -p 8001 在本地服务器运行该项目 
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
