@@ -23,25 +23,52 @@ function App() {
     };
     getTasks();
   }, []);
-
+  // 请求任务列表
   const fetchTasks = async () => {
     const res = await fetch("http://localhost:5000/tasks");
     const data = await res.json();
     return data;
   };
-
-  const deleteTasks = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  // 请求单个任务
+  const fetchTask = async (id: number) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`);
+    const data = await res.json();
+    return data;
+  };
+  const deleteTasks = async (id: number) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "DELETE",
+    });
+    res.status === 200 ? setTasks(tasks.filter((task) => task.id !== id)) : alert("Delete task failed");
   };
 
-  const addTask = (task: Itask["tasks"][0]) => {
-    const id = Math.floor(Math.random() * 10000) + 1;
-    const newTask = { ...task, id: id };
-    setTasks([...tasks, newTask]);
+  // const addTask = (task: Itask["tasks"][0]) => {
+  //   const id = Math.floor(Math.random() * 10000) + 1;
+  //   const newTask = { ...task, id: id };
+  //   setTasks([...tasks, newTask]);
+  // };
+  const addTask = async (task: Itask["tasks"][0]) => {
+    const res = await fetch(`http://localhost:5000/tasks`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
+    const data = await res.json();
+    setTasks([...tasks, data]);
   };
 
-  const toggleReminder = (id: number) => {
-    setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task)));
+  const toggleReminder = async (id: number) => {
+    const taskToToggle = await fetchTask(id);
+    const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updTask),
+    });
+    const data = await res.json();
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: data.reminder } : task)));
   };
   return (
     <div className="container">
