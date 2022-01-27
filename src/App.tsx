@@ -15,6 +15,7 @@ export interface Itask {
 
 function App() {
   const [tasks, setTasks] = useState<Itask["tasks"]>([]);
+  const [showAddTask, setShowAddTask] = useState(false);
   useEffect(() => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
@@ -44,8 +45,14 @@ function App() {
   };
   return (
     <div className="container">
-      <Header title="Task Tracker" showAdd={false} />
-      <AddTask onAdd={addTask} />
+      <Header
+        title="Task Tracker"
+        showAdd={showAddTask}
+        onAdd={() => {
+          setShowAddTask(!showAddTask);
+        }}
+      />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
       ) : (

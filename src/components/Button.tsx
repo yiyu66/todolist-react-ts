@@ -3,12 +3,12 @@ import React from "react";
 interface ButtonProps {
   text?: string;
   color?: string;
-  onclick?(): Function;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, color, onclick }) => {
+const Button: React.FC<ButtonProps> = ({ text, color, onClick }) => {
   return (
-    <button style={{ backgroundColor: color }} onClick={onclick} className="btn">
+    <button style={{ backgroundColor: color }} onClick={onClick} className="btn">
       {text}
     </button>
   );

@@ -3,13 +3,13 @@ import Button from "./Button";
 interface Props {
   title?: string;
   showAdd: boolean;
-  onAdd?(): Function;
+  onAdd: React.MouseEventHandler<HTMLButtonElement>;
 }
 const Header: React.FC<Props> = ({ title, onAdd, showAdd }) => {
   return (
     <header className="header">
       <h1>{title}</h1>
-      <Button text={showAdd ? "Close" : "Add"} color={showAdd ? "red" : "green"} onclick={onAdd} />
+      <Button text={showAdd ? "Close" : "Add"} color={showAdd ? "red" : "green"} onClick={onAdd} />
     </header>
   );
 };
