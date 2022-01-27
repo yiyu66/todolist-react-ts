@@ -3,14 +3,14 @@ import Button from "./Button";
 interface Props {
   title?: string;
   showAdd: boolean;
-  onAdd?() : Function;
+  onAdd?(): Function;
 }
 const Header: React.FC<Props> = ({ title, onAdd, showAdd }) => {
   return (
-    <div>
+    <header className="header">
       <h1>{title}</h1>
       <Button text={showAdd ? "Close" : "Add"} color={showAdd ? "red" : "green"} onclick={onAdd} />
-    </div>
+    </header>
   );
 };
 Header.defaultProps = {

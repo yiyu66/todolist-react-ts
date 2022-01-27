@@ -19,7 +19,6 @@ function App() {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
       setTasks(tasksFromServer);
-      // console.log(tasksFromServer);
     };
     getTasks();
   }, []);
@@ -31,19 +30,17 @@ function App() {
   };
 
   const deleteTasks = (id: number) => {
-    console.log("delete", id);
     setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const addTask = (task: Itask["tasks"][0]) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newTask = { ...task, id: id };
+    setTasks([...tasks, newTask]);
   };
 
   const toggleReminder = (id: number) => {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task)));
-  };
-
-  const addTask = (task: Itask) => {
-    console.log(task);
-    // const id = Math.floor(Math.random() * 10000) + 1;
-    // const newTask = { id, ...task };
-    // setTasks([...tasks, newTask]);
   };
   return (
     <div className="container">
