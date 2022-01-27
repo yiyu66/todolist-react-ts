@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import About from "./components/About";
 export interface Itask {
   tasks: {
     id: number;
@@ -42,7 +44,7 @@ function App() {
     res.status === 200 ? setTasks(tasks.filter((task) => task.id !== id)) : alert("Delete task failed");
   };
 
-  // const addTask = (task: Itask["tasks"][0]) => {
+  // const addTask = (task: Itask["tasks"][0]) => { // 本地操作
   //   const id = Math.floor(Math.random() * 10000) + 1;
   //   const newTask = { ...task, id: id };
   //   setTasks([...tasks, newTask]);
@@ -71,22 +73,34 @@ function App() {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: data.reminder } : task)));
   };
   return (
-    <div className="container">
-      <Header
-        title="Task Tracker"
-        showAdd={showAddTask}
-        onAdd={() => {
-          setShowAddTask(!showAddTask);
-        }}
-      />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? (
-        <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
-      ) : (
-        "No Tasks"
-      )}
-      <Footer />
-    </div>
+    <Router>
+      <div className="container">
+        <Header
+          title="Task Tracker"
+          showAdd={showAddTask}
+          onAdd={() => {
+            setShowAddTask(!showAddTask);
+          }}
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                {showAddTask && <AddTask onAdd={addTask} />}
+                {tasks.length > 0 ? (
+                  <TaskList tasks={tasks} onDelete={deleteTasks} onToggle={toggleReminder}></TaskList>
+                ) : (
+                  "No Tasks"
+                )}
+              </>
+            }
+          ></Route>
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
